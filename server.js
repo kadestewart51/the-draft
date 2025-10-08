@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const { getDatabase } = require('./database/init.js');
+const { getDatabase, initDatabase } = require('./database/init.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,9 +10,6 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Database connection and initialization
-const { getDatabase, initDatabase } = require('./database/init.js');
 
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('Initializing database...');

@@ -16,6 +16,11 @@ const db = getDatabase();
 
 // Routes
 
+// Health check
+app.get('/health', (req, res) => {
+    res.json({ status: 'Server is running', timestamp: new Date().toISOString() });
+});
+
 // Debug endpoint to check database status
 app.get('/api/debug', (req, res) => {
     // Check if database file exists and tables are created

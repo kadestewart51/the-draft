@@ -240,9 +240,23 @@
         async function loadStatPackages() {
             try {
                 const response = await fetch('/api/stat-packages');
-                statPackages = await response.json();
+                const data = await response.json();
                 
                 const select = document.getElementById('statPackage');
+                
+                if (!response.ok || data.error) {
+                    console.error('API Error:', data.error || 'Unknown error');
+                    select.innerHTML = `<option value="">Error: ${data.error || 'Unknown error'}</option>`;
+                    return;
+                }
+                
+                if (!Array.isArray(data)) {
+                    console.error('Expected array, got:', typeof data, data);
+                    select.innerHTML = '<option value="">Error: Invalid data format</option>';
+                    return;
+                }
+                
+                statPackages = data;
                 select.innerHTML = '<option value="">Choose your stat philosophy</option>';
                 
                 statPackages.forEach(pkg => {
@@ -253,7 +267,7 @@
                 });
             } catch (error) {
                 console.error('Error loading stat packages:', error);
-                document.getElementById('statPackage').innerHTML = '<option value="">Error loading packages</option>';
+                document.getElementById('statPackage').innerHTML = '<option value="">Network error</option>';
             }
         }
         

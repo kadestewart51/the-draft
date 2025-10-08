@@ -9,18 +9,20 @@
     "scrape": "node scraper/scraper.js",
     "init-db": "node database/init.js",
     "test-db": "node database/test.js",
-    "build": "npm rebuild sqlite3 && npm run init-db"
+    "build-css": "tailwindcss -i ./src/input.css -o ./public/output.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./public/output.css && npm rebuild sqlite3 && npm run init-db"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "sqlite3": "^5.1.6",
-    "cheerio": "^1.0.0-rc.12",
     "axios": "^1.6.2",
-    "node-cron": "^3.0.3",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
-    "socket.io": "^4.7.4"
+    "express": "^4.18.2",
+    "node-cron": "^3.0.3",
+    "socket.io": "^4.7.4",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "tailwindcss": "^3.4.0"
   }
 }

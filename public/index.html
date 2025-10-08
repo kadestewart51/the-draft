@@ -4,210 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Baseball Draft</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
-            min-height: 100vh;
-            color: white;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .form-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .form-group {
-            margin-bottom: 24px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-        
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #60a5fa;
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .stat-package-preview {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .stat-package-preview h4 {
-            margin-bottom: 8px;
-            color: #60a5fa;
-        }
-        
-        .stat-package-preview p {
-            margin-bottom: 12px;
-            opacity: 0.9;
-            font-style: italic;
-        }
-        
-        .categories {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 12px;
-        }
-        
-        .category-group h5 {
-            margin-bottom: 6px;
-            color: #93c5fd;
-        }
-        
-        .category-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        
-        .category-tag {
-            background: rgba(96, 165, 250, 0.3);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            border: 1px solid rgba(96, 165, 250, 0.5);
-        }
-        
-        .create-button {
-            width: 100%;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 16px 24px;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .create-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-        }
-        
-        .create-button:disabled {
-            background: rgba(255, 255, 255, 0.3);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .success-message {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        
-        .share-url {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            padding: 8px;
-            margin: 8px 0;
-            font-family: monospace;
-            word-break: break-all;
-        }
-        
-        @media (max-width: 600px) {
-            .categories {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .form-card {
-                padding: 24px;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        baseball: {
+                            primary: '#1e3a8a',
+                            secondary: '#3730a3',
+                            accent: '#10b981'
+                        }
+                    }
+                }
             }
         }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>⚾ Advanced Baseball Draft</h1>
-            <p>ESPN-style fantasy with advanced stats that actually matter</p>
+<body class="bg-gradient-to-br from-baseball-primary to-baseball-secondary min-h-screen text-white">
+    <div class="max-w-4xl mx-auto px-6 py-10">
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold mb-4">⚾ Advanced Baseball Draft</h1>
+            <p class="text-xl opacity-90">ESPN-style fantasy with advanced stats that actually matter</p>
         </div>
         
-        <div class="form-card">
-            <form id="createLeagueForm">
-                <div class="form-group">
-                    <label for="leagueName">League Name</label>
-                    <input type="text" id="leagueName" name="leagueName" placeholder="The Barrel Kings" required>
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+            <form id="createLeagueForm" class="space-y-6">
+                <div>
+                    <label for="leagueName" class="block text-lg font-semibold mb-2">League Name</label>
+                    <input type="text" id="leagueName" name="leagueName" placeholder="The Barrel Kings" required
+                           class="w-full p-3 bg-white/10 border-2 border-white/30 rounded-lg text-white placeholder-white/70 focus:border-blue-400 focus:bg-white/20 transition-all">
                 </div>
                 
-                <div class="form-group">
-                    <label for="creatorName">Your Name</label>
-                    <input type="text" id="creatorName" name="creatorName" placeholder="Commissioner Name" required>
+                <div>
+                    <label for="creatorName" class="block text-lg font-semibold mb-2">Your Name</label>
+                    <input type="text" id="creatorName" name="creatorName" placeholder="Commissioner Name" required
+                           class="w-full p-3 bg-white/10 border-2 border-white/30 rounded-lg text-white placeholder-white/70 focus:border-blue-400 focus:bg-white/20 transition-all">
                 </div>
                 
-                <div class="form-group">
-                    <label for="maxTeams">Number of Teams</label>
-                    <select id="maxTeams" name="maxTeams" required>
+                <div>
+                    <label for="maxTeams" class="block text-lg font-semibold mb-2">Number of Teams</label>
+                    <select id="maxTeams" name="maxTeams" required
+                            class="w-full p-3 bg-white/10 border-2 border-white/30 rounded-lg text-white focus:border-blue-400 focus:bg-white/20 transition-all">
                         <option value="">Select team count</option>
                         <option value="8">8 Teams</option>
                         <option value="10">10 Teams</option>
@@ -215,21 +53,23 @@
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label for="statPackage">Stat Package</label>
-                    <select id="statPackage" name="statPackage" required>
+                <div>
+                    <label for="statPackage" class="block text-lg font-semibold mb-2">Stat Package</label>
+                    <select id="statPackage" name="statPackage" required
+                            class="w-full p-3 bg-white/10 border-2 border-white/30 rounded-lg text-white focus:border-blue-400 focus:bg-white/20 transition-all">
                         <option value="">Loading stat packages...</option>
                     </select>
                     
-                    <div id="statPackagePreview" class="stat-package-preview" style="display: none;"></div>
+                    <div id="statPackagePreview" class="mt-4 bg-white/10 rounded-lg p-4 border border-white/20" style="display: none;"></div>
                 </div>
                 
-                <button type="submit" class="create-button" id="createButton">
+                <button type="submit" id="createButton"
+                        class="w-full bg-gradient-to-r from-baseball-accent to-green-600 text-white border-none py-4 rounded-lg text-lg font-semibold cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg disabled:bg-white/30 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none">
                     Create League
                 </button>
             </form>
             
-            <div id="successMessage" class="success-message" style="display: none;"></div>
+            <div id="successMessage" class="mt-6 bg-baseball-accent/20 border border-baseball-accent/50 rounded-lg p-4 text-center" style="display: none;"></div>
         </div>
     </div>
     
@@ -283,19 +123,19 @@
             
             preview.style.display = 'block';
             preview.innerHTML = `
-                <h4>${pkg.name}</h4>
-                <p>${pkg.philosophy}</p>
-                <div class="categories">
-                    <div class="category-group">
-                        <h5>Hitting Categories</h5>
-                        <div class="category-list">
-                            ${pkg.hitting_categories.map(cat => `<span class="category-tag">${cat}</span>`).join('')}
+                <h4 class="text-lg font-bold text-blue-300 mb-2">${pkg.name}</h4>
+                <p class="text-sm opacity-90 italic mb-4">${pkg.philosophy}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h5 class="text-sm font-semibold text-blue-200 mb-2">Hitting Categories</h5>
+                        <div class="flex flex-wrap gap-1">
+                            ${pkg.hitting_categories.map(cat => `<span class="bg-blue-500/30 px-2 py-1 rounded text-xs border border-blue-500/50">${cat}</span>`).join('')}
                         </div>
                     </div>
-                    <div class="category-group">
-                        <h5>Pitching Categories</h5>
-                        <div class="category-list">
-                            ${pkg.pitching_categories.map(cat => `<span class="category-tag">${cat}</span>`).join('')}
+                    <div>
+                        <h5 class="text-sm font-semibold text-blue-200 mb-2">Pitching Categories</h5>
+                        <div class="flex flex-wrap gap-1">
+                            ${pkg.pitching_categories.map(cat => `<span class="bg-blue-500/30 px-2 py-1 rounded text-xs border border-blue-500/50">${cat}</span>`).join('')}
                         </div>
                     </div>
                 </div>
@@ -331,12 +171,12 @@
                     const successDiv = document.getElementById('successMessage');
                     successDiv.style.display = 'block';
                     successDiv.innerHTML = `
-                        <h3>🎉 League Created Successfully!</h3>
-                        <p><strong>League ID:</strong> ${result.roomId}</p>
-                        <p><strong>Share this link with your friends:</strong></p>
-                        <div class="share-url">${result.shareUrl}</div>
-                        <p style="margin-top: 12px;">
-                            <a href="${result.shareUrl}" style="color: #60a5fa;">Join your league →</a>
+                        <h3 class="text-xl font-bold mb-3">🎉 League Created Successfully!</h3>
+                        <p class="mb-2"><strong>League ID:</strong> ${result.roomId}</p>
+                        <p class="mb-2"><strong>Share this link with your friends:</strong></p>
+                        <div class="bg-white/10 border border-white/30 rounded p-3 my-3 font-mono text-sm break-all">${result.shareUrl}</div>
+                        <p class="mt-3">
+                            <a href="${result.shareUrl}" class="text-blue-300 hover:text-blue-200 underline">Join your league →</a>
                         </p>
                     `;
                     

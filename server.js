@@ -18,20 +18,35 @@ const db = getDatabase();
 
 // Get all stat packages
 app.get('/api/stat-packages', (req, res) => {
+    console.log('Fetching stat packages...');
+    
     db.all('SELECT * FROM stat_packages', [], (err, rows) => {
         if (err) {
+            console.error('Database error:', err.message);
             res.status(500).json({ error: err.message });
             return;
         }
         
-        // Parse JSON strings back to arrays
-        const packages = rows.map(pkg => ({
-            ...pkg,
-            hitting_categories: JSON.parse(pkg.hitting_categories),
-            pitching_categories: JSON.parse(pkg.pitching_categories)
-        }));
+        console.log(`Found ${rows.length} stat packages`);
         
-        res.json(packages);
+        if (rows.length === 0) {
+            res.status(500).json({ error: 'No stat packages found - database may not be initialized' });
+            return;
+        }
+        
+        try {
+            // Parse JSON strings back to arrays
+            const packages = rows.map(pkg => ({
+                ...pkg,
+                hitting_categories: JSON.parse(pkg.hitting_categories),
+                pitching_categories: JSON.parse(pkg.pitching_categories)
+            }));
+            
+            res.json(packages);
+        } catch (parseErr) {
+            console.error('JSON parse error:', parseErr.message);
+            res.status(500).json({ error: 'Error parsing stat package data' });
+        }
     });
 });
 

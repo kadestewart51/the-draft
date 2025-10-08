@@ -52,7 +52,11 @@ function initDatabase() {
 
 // Database connection helper
 function getDatabase() {
-    const dbPath = path.join(__dirname, 'baseball_draft.db');
+    // Use /tmp for writable storage on Render
+    const dbPath = process.env.NODE_ENV === 'production' 
+        ? '/tmp/baseball_draft.db' 
+        : path.join(__dirname, 'baseball_draft.db');
+    
     return new sqlite3.Database(dbPath, (err) => {
         if (err) {
             console.error('Error connecting to database:', err.message);

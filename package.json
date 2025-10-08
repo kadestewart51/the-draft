@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "scrape": "node scraper/scraper.js",
     "init-db": "node database/init.js",
-    "test-db": "node database/test.js"
+    "test-db": "node database/test.js",
+    "build": "npm rebuild sqlite3 && npm run init-db"
   },
   "dependencies": {
     "express": "^4.18.2",

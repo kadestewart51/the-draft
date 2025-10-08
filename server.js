@@ -16,6 +16,37 @@ const db = getDatabase();
 
 // Routes
 
+// Debug endpoint to check database status
+app.get('/api/debug', (req, res) => {
+    // Check if database file exists and tables are created
+    db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='stat_packages'", [], (err, row) => {
+        if (err) {
+            res.json({ error: 'Database error', details: err.message });
+            return;
+        }
+        
+        if (!row) {
+            res.json({ error: 'stat_packages table does not exist', dbPath: process.env.NODE_ENV === 'production' ? '/tmp/baseball_draft.db' : 'local' });
+            return;
+        }
+        
+        // Count rows in stat_packages
+        db.get("SELECT COUNT(*) as count FROM stat_packages", [], (err, countRow) => {
+            if (err) {
+                res.json({ error: 'Error counting stat packages', details: err.message });
+                return;
+            }
+            
+            res.json({ 
+                status: 'Database OK', 
+                tableExists: true, 
+                statPackageCount: countRow.count,
+                dbPath: process.env.NODE_ENV === 'production' ? '/tmp/baseball_draft.db' : 'local'
+            });
+        });
+    });
+});
+
 // Get all stat packages
 app.get('/api/stat-packages', (req, res) => {
     console.log('Fetching stat packages...');

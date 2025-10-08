@@ -1,0 +1,8 @@
+{
+  "build": {
+    "command": "npm install && npm run init-db"
+  },
+  "start": {
+    "command": "npm start"
+  }
+}

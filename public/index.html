@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Baseball Draft</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .form-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #60a5fa;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-package-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-package-preview h4 {
+            margin-bottom: 8px;
+            color: #60a5fa;
+        }
+        
+        .stat-package-preview p {
+            margin-bottom: 12px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        
+        .category-group h5 {
+            margin-bottom: 6px;
+            color: #93c5fd;
+        }
+        
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        .category-tag {
+            background: rgba(96, 165, 250, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            border: 1px solid rgba(96, 165, 250, 0.5);
+        }
+        
+        .create-button {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .create-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        .create-button:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .success-message {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .share-url {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            padding: 8px;
+            margin: 8px 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        @media (max-width: 600px) {
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚾ Advanced Baseball Draft</h1>
+            <p>ESPN-style fantasy with advanced stats that actually matter</p>
+        </div>
+        
+        <div class="form-card">
+            <form id="createLeagueForm">
+                <div class="form-group">
+                    <label for="leagueName">League Name</label>
+                    <input type="text" id="leagueName" name="leagueName" placeholder="The Barrel Kings" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="creatorName">Your Name</label>
+                    <input type="text" id="creatorName" name="creatorName" placeholder="Commissioner Name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="maxTeams">Number of Teams</label>
+                    <select id="maxTeams" name="maxTeams" required>
+                        <option value="">Select team count</option>
+                        <option value="8">8 Teams</option>
+                        <option value="10">10 Teams</option>
+                        <option value="12">12 Teams</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="statPackage">Stat Package</label>
+                    <select id="statPackage" name="statPackage" required>
+                        <option value="">Loading stat packages...</option>
+                    </select>
+                    
+                    <div id="statPackagePreview" class="stat-package-preview" style="display: none;"></div>
+                </div>
+                
+                <button type="submit" class="create-button" id="createButton">
+                    Create League
+                </button>
+            </form>
+            
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        let statPackages = [];
+        
+        // Load stat packages on page load
+        async function loadStatPackages() {
+            try {
+                const response = await fetch('/api/stat-packages');
+                statPackages = await response.json();
+                
+                const select = document.getElementById('statPackage');
+                select.innerHTML = '<option value="">Choose your stat philosophy</option>';
+                
+                statPackages.forEach(pkg => {
+                    const option = document.createElement('option');
+                    option.value = pkg.id;
+                    option.textContent = pkg.name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading stat packages:', error);
+                document.getElementById('statPackage').innerHTML = '<option value="">Error loading packages</option>';
+            }
+        }
+        
+        // Show stat package preview
+        function showStatPackagePreview(packageId) {
+            const pkg = statPackages.find(p => p.id === packageId);
+            const preview = document.getElementById('statPackagePreview');
+            
+            if (!pkg) {
+                preview.style.display = 'none';
+                return;
+            }
+            
+            preview.style.display = 'block';
+            preview.innerHTML = `
+                <h4>${pkg.name}</h4>
+                <p>${pkg.philosophy}</p>
+                <div class="categories">
+                    <div class="category-group">
+                        <h5>Hitting Categories</h5>
+                        <div class="category-list">
+                            ${pkg.hitting_categories.map(cat => `<span class="category-tag">${cat}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="category-group">
+                        <h5>Pitching Categories</h5>
+                        <div class="category-list">
+                            ${pkg.pitching_categories.map(cat => `<span class="category-tag">${cat}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Handle form submission
+        async function createLeague(event) {
+            event.preventDefault();
+            
+            const button = document.getElementById('createButton');
+            button.disabled = true;
+            button.textContent = 'Creating League...';
+            
+            const formData = new FormData(event.target);
+            const data = {
+                name: formData.get('leagueName'),
+                creator_name: formData.get('creatorName'),
+                max_teams: parseInt(formData.get('maxTeams')),
+                stat_package: formData.get('statPackage')
+            };
+            
+            try {
+                const response = await fetch('/api/rooms', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    const successDiv = document.getElementById('successMessage');
+                    successDiv.style.display = 'block';
+                    successDiv.innerHTML = `
+                        <h3>🎉 League Created Successfully!</h3>
+                        <p><strong>League ID:</strong> ${result.roomId}</p>
+                        <p><strong>Share this link with your friends:</strong></p>
+                        <div class="share-url">${result.shareUrl}</div>
+                        <p style="margin-top: 12px;">
+                            <a href="${result.shareUrl}" style="color: #60a5fa;">Join your league →</a>
+                        </p>
+                    `;
+                    
+                    // Hide the form
+                    event.target.style.display = 'none';
+                } else {
+                    alert('Error creating league: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error creating league:', error);
+                alert('Error creating league. Please try again.');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Create League';
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('statPackage').addEventListener('change', (e) => {
+            showStatPackagePreview(e.target.value);
+        });
+        
+        document.getElementById('createLeagueForm').addEventListener('submit', createLeague);
+        
+        // Load stat packages when page loads
+        loadStatPackages();
+    </script>
+</body>
+</html>

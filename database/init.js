@@ -4,10 +4,12 @@ const path = require('path');
 
 // Initialize database
 function initDatabase() {
-    const dbPath = path.join(__dirname, 'baseball_draft.db');
+    const dbPath = process.env.NODE_ENV === 'production' 
+        ? '/tmp/baseball_draft.db' 
+        : path.join(__dirname, 'baseball_draft.db');
     
-    // Remove existing database for fresh start
-    if (fs.existsSync(dbPath)) {
+    // Remove existing database for fresh start (only in development)
+    if (process.env.NODE_ENV !== 'production' && fs.existsSync(dbPath)) {
         fs.unlinkSync(dbPath);
         console.log('Removed existing database');
     }

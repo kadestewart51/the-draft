@@ -11,7 +11,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Database connection
+// Database connection and initialization
+const { getDatabase, initDatabase } = require('./database/init.js');
+
+// Initialize database on startup
+if (process.env.NODE_ENV === 'production') {
+    console.log('Initializing database for production...');
+    initDatabase();
+}
+
 const db = getDatabase();
 
 // Routes

@@ -14,11 +14,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Database connection and initialization
 const { getDatabase, initDatabase } = require('./database/init.js');
 
-// Initialize database on startup
-if (process.env.NODE_ENV === 'production') {
-    console.log('Initializing database for production...');
-    initDatabase();
-}
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('Initializing database...');
+
+// Always initialize database on startup
+initDatabase();
+
+// Wait a bit for database to be ready
+setTimeout(() => {
+    console.log('Database should be ready now');
+}, 2000);
 
 const db = getDatabase();
 

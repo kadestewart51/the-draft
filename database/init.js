@@ -14,12 +14,14 @@ function initDatabase() {
         console.log('Removed existing database');
     }
     
+    console.log('Creating database at:', dbPath);
+    
     const db = new sqlite3.Database(dbPath, (err) => {
         if (err) {
             console.error('Error opening database:', err.message);
             return;
         }
-        console.log('Connected to SQLite database');
+        console.log('Connected to SQLite database at:', dbPath);
     });
     
     // Read and execute schema
